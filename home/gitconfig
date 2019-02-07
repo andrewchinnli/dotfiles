@@ -38,6 +38,7 @@
   # checkout-specific aliases
   co = checkout
   coi = "!git-checkout-interactive"
+  cors = "!git-checkout-remote-search"
   cp = checkout --patch
 
   # merging

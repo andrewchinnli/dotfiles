@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+counter=1
+
+#echo "" # start with a newline
+
+echo -ne "Branch keyword: "
+read n
+
+branches=($(git for-each-ref --format='%(refname:short)' | grep "origin.*$n" | awk -F '/' '{print $2}'))
+
+for name in ${branches[@]}; do
+	printf "%3s %s\n" "$counter." "$name"
+	let counter+=1
+done
+
+echo -ne "\nWhich branch number? "
+read n
+
+if [[ $n =~ ^[0-9]+$ && $n -ge 1 && $n -le ${#branches[@]} ]]; then
+  git checkout ${branches[n-1]}
+else
+  echo "Invalid selection!"
+  exit 1
+fi
